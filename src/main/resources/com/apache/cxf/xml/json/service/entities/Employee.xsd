@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://shap.com/Employee" xmlns:tns="http://shap.com/Employee"
+	elementFormDefault="qualified">
+
+	<!-- employee object with three attributes -->
+	<xsd:element name="Employee">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="eno" type="xsd:int" />
+				<xsd:element name="name" type="xsd:string" />
+				<xsd:element name="salary" type="xsd:double" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<!-- an object to contain lists of employees referencing above employee object -->
+	<xsd:element name="Employees">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="tns:Employee" minOccurs="0"
+					maxOccurs="unbounded" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+</xsd:schema>
