@@ -14,7 +14,7 @@ pipeline {
         stage('Build') {
             steps {
                 dir("/var/lib/jenkins/workspace/sample-api-poc_main") {
-                sh 'mvn -B -DskipTests clean package'
+                sh 'mvn clean install -DskipTests'
                 }
             }
         }
