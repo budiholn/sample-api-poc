@@ -15,8 +15,8 @@ pipeline {
             steps {
                 dir("/var/lib/jenkins/workspace/sample-api-poc") {
                 sh 'mvn -B -DskipTests clean package'
-                sh \cp target/ApacheCXF-XML-JSON.war ./
                 }
+                bat("xcopy /var/lib/jenkins/workspace/sample-api-poc/target/ApacheCXF-XML-JSON.war /var/lib/jenkins/workspace/sample-api-poc/ApacheCXF-XML-JSON.war /O /X /E /H /K")
             }
         }
      }
