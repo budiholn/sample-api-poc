@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                dir("/var/lib/jenkins/workspace/sample-api-poc_main") {
+                dir("/var/lib/jenkins/workspace/sample-api-poc") {
                 sh 'mvn -B -DskipTests clean package'
                 }
             }
