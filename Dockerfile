@@ -9,7 +9,7 @@ RUN cd /tmp && tar xvfz tomcat.tar.gz && cp -Rv /tmp/apache-tomcat-9.0.14/* /opt
 COPY context.xml /opt/tomcat/conf/context.xml
 
     #=====
-    COPY assets/ApacheCXF-XML-JSON.war /opt/tomcat/webapps/ApacheCXF-XML-JSON.war
+    COPY target/ApacheCXF-XML-JSON.war /opt/tomcat/webapps/ApacheCXF-XML-JSON.war
     #=====
 
 RUN cd /opt/tomcat && chgrp -R tomcat /opt/tomcat && chmod -R g+r conf && chmod g+x conf && chown -R tomcat webapps/ work/ temp/ logs/ \
