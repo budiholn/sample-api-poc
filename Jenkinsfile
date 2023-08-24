@@ -5,7 +5,7 @@
                     remote.user = "rancher"
                     remote.port = 22
                     //remote.allowAnyHosts = true
-                    remote.identityFile = credentials(['jenkins-rancher'])
+                    remote.identityFile = credentials(jenkins-rancher)
 		    //remote.identityFile = '/var/lib/jenkins/.ssh/id_rsa'
 		    remote.allowAnyHosts = true
 		    remote.agentForwarding = true
