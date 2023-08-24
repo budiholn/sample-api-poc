@@ -3,6 +3,7 @@ pipeline {
     DOCKERHUB_IMAGE = "budiholan/jenkins-api-poc"
     KUBE_HOST_USER = "rancher"
     KUBE_IP = "192.168.160.211"
+    RANCHER = "rancher@192.168.160.211"
   }
   agent any
   tools {
@@ -53,7 +54,7 @@ pipeline {
 	steps {
              sh "sed -i 's|<TheTag>|$BUILD_NUMBER|g' sample-api-poc.yaml"
              sh "scp sample-api-poc.yaml "+KUBE_HOST_USER+"@"+KUBE_IP+":/home/rancher/"
-             ssh KUBE_HOST_USER+'@'+KUBE_IP+' export KUBECONFIG=kube_config_cluster.yml && kubectl apply -f sample-api-poc.yaml'
+             ssh RANCHER+' export KUBECONFIG=kube_config_cluster.yml && kubectl apply -f sample-api-poc.yaml'
 	}
     }
 
