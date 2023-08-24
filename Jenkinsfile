@@ -1,21 +1,21 @@
-pipeline {
-  environment {
-    DOCKERHUB_IMAGE = "budiholan/jenkins-api-poc"
-    KUBE_HOST_USER = "rancher"
-    KUBE_IP = "192.168.160.211"
-  }
-
                     // Define the remote server configuration
 		    def remote = [:]
                     remote.name = 'RemoteServer'
-                    remote.host = KUBE_IP
-                    remote.user = KUBE_HOST_USER
+                    remote.host = "192.168.160.211"
+                    remote.user = "rancher"
                     remote.port = 22
                     //remote.allowAnyHosts = true
                     //remote.identityFile = credentials('jenkins-rancher')
 		    remote.identityFile = '/var/lib/jenkins/.ssh/id_rsa'
 		    remote.allowAnyHosts = true
 		    remote.agentForwarding = true
+
+pipeline {
+  environment {
+    DOCKERHUB_IMAGE = "budiholan/jenkins-api-poc"
+    KUBE_HOST_USER = "rancher"
+    KUBE_IP = "192.168.160.211"
+  }
 	
   agent any
   tools {
