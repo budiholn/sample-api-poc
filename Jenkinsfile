@@ -1,6 +1,8 @@
 pipeline {
   environment {
     DOCKERHUB_IMAGE = "budiholan/jenkins-api-poc"
+    KUBE_HOST_USER = "rancher"
+    KUBE_IP = "192.168.160.211"
   }
   agent any
   tools {
@@ -45,6 +47,16 @@ pipeline {
         steps{
             sh "docker rmi "+DOCKERHUB_IMAGE+":$BUILD_NUMBER"
         }
+    }
+
+    stage('Deploy image') {
+	steps {
+	  script {
+             sed -i "s|<TheTag>|$BUILD_NUMBER|g" sample-api-poc.yaml
+             scp sample-api-poc.yaml KUBE_HOST_USER@KUBE_IP:/home/rancher
+             ssh KUBE_HOST_USER@KUBE_IP "export KUBECONFIG=kube_config_cluster.yml && kubectl apply -f sample-api-poc.yaml"
+          }
+	}
     }
 
   }
