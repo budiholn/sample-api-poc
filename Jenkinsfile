@@ -25,15 +25,19 @@ pipeline {
 
     stage('Build image') {
 	steps {
-	    dockerImage = docker.build($DOCKERHUB_IMAGE+":"+$BUILD_NUMBER)
+	  script {
+	    dockerImage = docker.build $DOCKERHUB_IMAGE+":"+$BUILD_NUMBER
+          }
 	}
     }
     
     stage('Push image') {
 	steps {
-	    withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
-            dockerImage.push()
+	  script {
+	    docker.withRegistry('', dockerhub) {
+	    dockerImage.push()
             }
+          }
 	}
     }
 
