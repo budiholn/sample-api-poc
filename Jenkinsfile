@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    DOCKERHUB_IMAGE = "budiholan/sample-api-poc")
+    DOCKERHUB_IMAGE = "budiholan/sample-api-poc"
   }
   agent any
   tools {
