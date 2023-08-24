@@ -1,3 +1,14 @@
+                    // Define the remote server configuration
+                    def remote = [:]
+                    remote.name = 'RemoteServer'
+                    remote.host = KUBE_IP
+                    remote.user = KUBE_HOST_USER
+                    remote.port = 22
+                    //remote.allowAnyHosts = true
+                    //remote.identityFile = credentials('jenkins-rancher')
+		    remote.identityFile = '/var/lib/jenkins/.ssh/id_rsa'
+		    remote.allowAnyHosts = true
+		    remote.agentForwarding = true
 pipeline {
   environment {
     DOCKERHUB_IMAGE = "budiholan/jenkins-api-poc"
@@ -58,41 +69,23 @@ pipeline {
 	}
     }
 
-        /*stage('SSH to Remote Server') {
+        stage('SSH to Remote Server') {
             steps {
                 script {
-                    // Define the remote server configuration
-                    def remote = [:]
-                    remote.name = 'RemoteServer'
-                    remote.host = KUBE_IP
-                    remote.user = KUBE_HOST_USER
-                    remote.port = 22
-                    remote.allowAnyHosts = true
-                    remote.identityFile = credentials('jenkins-rancher')
-                    
-                    // Define commands to execute on the remote server
-                    def commands = """
-                        echo 'Hello from Jenkins!'
-                        ls -al
-			export KUBECONFIG=kube_config_cluster.yml
-                        kubectl apply -f sample-api-poc.yaml
-                    """
-                    
                     // Execute commands on the remote server
-                    sshCommand remote: remote, command: commands
+                    //sshCommand remote: remote, command: commands
+		    sshCommand remote: remote, command: "export KUBECONFIG=kube_config_cluster.yml' && 'kubectl apply -f sample-api-poc.yaml"
                 }
             }
-        }*/
+        }
 	  
-    stage('Remote SSH') {
+    /*stage('Remote SSH') {
     	steps{
              sshagent(credentials : ['jenkins-rancher']) {
-             //sh 'ssh '+KUBE_HOST_USER+'@'+KUBE_IP+' export KUBECONFIG=kube_config_cluster.yml && kubectl apply -f sample-api-poc.yaml'
 	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP+" 'export KUBECONFIG=kube_config_cluster.yml' && 'kubectl apply -f sample-api-poc.yaml'"
-	     //sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP+" 'kubectl apply -f sample-api-poc.yaml'"
              }
     	}
-    }
+    }*/
 
   }
   post {
