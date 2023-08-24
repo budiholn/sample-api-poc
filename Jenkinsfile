@@ -21,6 +21,7 @@ pipeline {
         steps {
             dir("/var/lib/jenkins/workspace/sample-api-poc") {
             sh 'mvn -B -DskipTests clean package'
+	    sh "scp sample-api-poc.yaml "+KUBE_HOST_USER+"@"+KUBE_IP+":/home/rancher"
             }
         }
     }
