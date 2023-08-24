@@ -58,7 +58,7 @@ pipeline {
 	}
     }
 
-        stage('SSH to Remote Server') {
+        /*stage('SSH to Remote Server') {
             steps {
                 script {
                     // Define the remote server configuration
@@ -82,15 +82,15 @@ pipeline {
                     sshCommand remote: remote, command: commands
                 }
             }
-        }
+        }*/
 	  
-    /*stage('Remote SSH') {
+    stage('Remote SSH') {
     	steps{
              sshagent(credentials : ['jenkins-rancher']) {
              sh 'ssh '+KUBE_HOST_USER+'@'+KUBE_IP+' export KUBECONFIG=kube_config_cluster.yml && kubectl apply -f sample-api-poc.yaml'
              }
     	}
-    }*/
+    }
 
   }
   post {
