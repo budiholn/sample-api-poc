@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: jenkins-api-poc
-          image: budiholan/jenkins-api-poc:<TheTag>
+          image: registry.hub.docker.com/budiholan/jenkins-api-poc:<TheTag>
           imagePullPolicy: "IfNotPresent"
           ports:
             - containerPort: 8080
