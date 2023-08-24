@@ -27,6 +27,7 @@ pipeline {
 
     stage('Build image') {
 	steps {
+	  sh "sudo bash && su - rancher"
 	  script {
 	    dockerImage = docker.build DOCKERHUB_IMAGE+":$BUILD_NUMBER"
           }
@@ -52,7 +53,6 @@ pipeline {
     stage('Deploy image') {
 	steps {
              sh "sed -i 's|<TheTag>|$BUILD_NUMBER|g' sample-api-poc.yaml"
-	     sh "sudo bash && su - rancher"
              sh "scp /var/lib/jenkins/workspace/sample-api-poc/sample-api-poc.yaml "+KUBE_HOST_USER+"@"+KUBE_IP+":/home/rancher"
              //ssh KUBE_HOST_USER+"@"+KUBE_IP "export KUBECONFIG=kube_config_cluster.yml && kubectl apply -f sample-api-poc.yaml"
 	}
