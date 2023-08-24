@@ -3,13 +3,6 @@ pipeline {
     DOCKERHUB_IMAGE = "budiholan/jenkins-api-poc"
     KUBE_HOST_USER = "rancher"
     KUBE_IP = "192.168.160.211"
-
-    def remote = [:]
-    remote.name = 'rancher'
-    remote.host = '192.168.160.211'
-    remote.user = 'rancher'
-    remote.password = 'rancher'
-    remote.allowAnyHosts = true
   }
   agent any
   tools {
@@ -65,8 +58,11 @@ pipeline {
     }
 
     stage('Remote SSH') {
-      writeFile file: 'abc.sh', text: KUBE_HOST_USER+"@"+KUBE_IP "export KUBECONFIG=kube_config_cluster.yml && kubectl apply -f sample-api-poc.yaml"
-      sshScript remote: remote, script: "abc.sh"
+    	steps{
+             sshagent(credentials : ['ssh-rancher']) {
+             sh 'ssh '+KUBE_HOST_USER+'@'+KUBE_IP+' export KUBECONFIG=kube_config_cluster.yml && kubectl apply -f sample-api-poc.yaml'
+             }
+    	}
     }
 
   }
