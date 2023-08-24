@@ -26,7 +26,7 @@ pipeline {
     stage('Build image') {
 	steps {
 	  script {
-	    dockerImage = docker.build $DOCKERHUB_IMAGE+":"+$BUILD_NUMBER
+	    dockerImage = docker.build DOCKERHUB_IMAGE+":"+$BUILD_NUMBER
           }
 	}
     }
@@ -43,7 +43,7 @@ pipeline {
 
     stage('Cleaning up') {
         steps{
-            sh "docker rmi "+$DOCKERHUB_IMAGE+":"+$BUILD_NUMBER
+            sh "docker rmi "+DOCKERHUB_IMAGE+":"+$BUILD_NUMBER
         }
     }
 
