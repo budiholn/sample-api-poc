@@ -27,7 +27,7 @@ pipeline {
 
     stage('Build image') {
 	steps {
-	  sh "sudo bash && su - rancher"
+	  sh "sudo bash"
 	  script {
 	    dockerImage = docker.build DOCKERHUB_IMAGE+":$BUILD_NUMBER"
           }
