@@ -4,11 +4,11 @@
                     remote.host = "192.168.160.211"
                     remote.user = "rancher"
                     remote.port = 22
-                    //remote.allowAnyHosts = true
-                    remote.identityFile = credentials(jenkins-rancher)
+                    remote.allowAnyHosts = true
+                    remote.identityFile = credentials('jenkins-rancher')
 		    //remote.identityFile = '/var/lib/jenkins/.ssh/id_rsa'
-		    remote.allowAnyHosts = true
-		    remote.agentForwarding = true
+		    //remote.allowAnyHosts = true
+		    //remote.agentForwarding = true
 
 pipeline {
   environment {
