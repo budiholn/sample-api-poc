@@ -52,18 +52,20 @@ pipeline {
     stage('Deploy image') {
 	steps {
              sh "sed -i 's|<TheTag>|$BUILD_NUMBER|g' sample-api-poc.yaml"
-             sh "scp sample-api-poc.yaml "+KUBE_HOST_USER+"@"+KUBE_IP+":/home/rancher"
+	     sshagent(credentials : ['ssh-rancher']) {
+                sh "scp sample-api-poc.yaml "+KUBE_HOST_USER+"@"+KUBE_IP+":/home/rancher"
+	     }
              //ssh KUBE_HOST_USER+"@"+KUBE_IP "export KUBECONFIG=kube_config_cluster.yml && kubectl apply -f sample-api-poc.yaml"
 	}
     }
 
-    stage('Remote SSH') {
+    /*stage('Remote SSH') {
     	steps{
              sshagent(credentials : ['ssh-rancher']) {
              sh 'ssh '+KUBE_HOST_USER+'@'+KUBE_IP+' export KUBECONFIG=kube_config_cluster.yml && kubectl apply -f sample-api-poc.yaml'
              }
     	}
-    }
+    }*/
 
   }
   post {
