@@ -1,10 +1,22 @@
-                    def remote = [:]
 pipeline {
   environment {
     DOCKERHUB_IMAGE = "budiholan/jenkins-api-poc"
     KUBE_HOST_USER = "rancher"
     KUBE_IP = "192.168.160.211"
   }
+
+                    // Define the remote server configuration
+		    def remote = [:]
+                    remote.name = 'RemoteServer'
+                    remote.host = KUBE_IP
+                    remote.user = KUBE_HOST_USER
+                    remote.port = 22
+                    //remote.allowAnyHosts = true
+                    //remote.identityFile = credentials('jenkins-rancher')
+		    remote.identityFile = '/var/lib/jenkins/.ssh/id_rsa'
+		    remote.allowAnyHosts = true
+		    remote.agentForwarding = true
+	
   agent any
   tools {
     maven "maven"
@@ -61,17 +73,6 @@ pipeline {
 
         stage('SSH to Remote Server') {
             steps {
-                    // Define the remote server configuration
-                    remote.name = 'RemoteServer'
-                    remote.host = KUBE_IP
-                    remote.user = KUBE_HOST_USER
-                    remote.port = 22
-                    //remote.allowAnyHosts = true
-                    //remote.identityFile = credentials('jenkins-rancher')
-		    remote.identityFile = '/var/lib/jenkins/.ssh/id_rsa'
-		    remote.allowAnyHosts = true
-		    remote.agentForwarding = true
-		    
 		  sshCommand remote: remote, command: "export KUBECONFIG=kube_config_cluster.yml' && 'kubectl apply -f sample-api-poc.yaml"  
                 //script {
                     // Execute commands on the remote server
