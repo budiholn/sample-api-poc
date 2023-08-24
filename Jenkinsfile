@@ -15,6 +15,7 @@ pipeline {
             steps {
                 dir("/var/lib/jenkins/workspace/sample-api-poc") {
                 sh 'mvn -B -DskipTests clean package'
+                docker build -t sample-api-poc:0.0.1 -f Dockerfile .
                 }
             }
         }
