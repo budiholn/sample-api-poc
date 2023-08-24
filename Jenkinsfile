@@ -87,7 +87,8 @@ pipeline {
     stage('Remote SSH') {
     	steps{
              sshagent(credentials : ['jenkins-rancher']) {
-             sh 'ssh '+KUBE_HOST_USER+'@'+KUBE_IP+' export KUBECONFIG=kube_config_cluster.yml && kubectl apply -f sample-api-poc.yaml'
+             //sh 'ssh '+KUBE_HOST_USER+'@'+KUBE_IP+' export KUBECONFIG=kube_config_cluster.yml && kubectl apply -f sample-api-poc.yaml'
+	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP+" 'export KUBECONFIG=kube_config_cluster.yml';'kubectl apply -f sample-api-poc.yaml'"
              }
     	}
     }
