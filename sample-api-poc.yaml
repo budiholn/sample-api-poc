@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sample-api-poc
+  name: jenkins-api-poc
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: sample-api-poc
+      app: jenkins-api-poc
   template:
     metadata:
       labels:
-        app: sample-api-poc
+        app: jenkins-api-poc
     spec:
       containers:
-        - name: sample-api-poc
-          image: budiholan/sample-api-poc:0.0.1
+        - name: jenkins-api-poc
+          image: budiholan/jenkins-api-poc:<TheTag>
           imagePullPolicy: "IfNotPresent"
           ports:
             - containerPort: 8080
@@ -25,15 +25,18 @@ spec:
 #              memory: 600Mi
 #              cpu: 500m
       restartPolicy: Always
+      imagePullSecrets:
+        - name: jenkins-rancher
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: sample-api-poc
+  name: jenkins-api-poc
 spec:
   type: NodePort
   selector:
-    app: sample-api-poc
+    app: jenkins-api-poc
   ports:
     - name: http
       protocol: TCP
