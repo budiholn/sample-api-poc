@@ -24,13 +24,17 @@ pipeline {
     }
 
     stage('Build image') {
-       dockerImage = docker.build($DOCKERHUB_IMAGE+":"+$BUILD_NUMBER)
+	steps {
+	    dockerImage = docker.build($DOCKERHUB_IMAGE+":"+$BUILD_NUMBER)
+	}
     }
     
     stage('Push image') {
-       withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
-       dockerImage.push()
-       }
+	steps {
+	    withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
+            dockerImage.push()
+            }
+	}
     }
 
     stage('Cleaning up') {
