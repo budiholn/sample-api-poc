@@ -1,3 +1,4 @@
+                    def remote = [:]
 pipeline {
   environment {
     DOCKERHUB_IMAGE = "budiholan/jenkins-api-poc"
@@ -61,7 +62,6 @@ pipeline {
         stage('SSH to Remote Server') {
             steps {
                     // Define the remote server configuration
-                    def remote = [:]
                     remote.name = 'RemoteServer'
                     remote.host = KUBE_IP
                     remote.user = KUBE_HOST_USER
