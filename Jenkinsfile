@@ -73,7 +73,7 @@ pipeline {
 
         stage('SSH to Remote Server') {
             steps {
-		  sshCommand remote: remote, command: "export KUBECONFIG=kube_config_cluster.yml' && 'kubectl apply -f sample-api-poc.yaml"  
+		  sshCommand remote: remote, command: "export KUBECONFIG=kube_config_cluster.yml && kubectl apply -f sample-api-poc.yaml"
                 //script {
                     // Execute commands on the remote server
                     //sshCommand remote: remote, command: commands
