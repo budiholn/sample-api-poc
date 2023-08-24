@@ -1,57 +1,48 @@
 pipeline {
-environment {
-registry = "budiholan/openai-cicd"
-registryCredential = 'docker-hub'
-dockerImage = ''
-}
-    agent any
-    tools {
-        maven "maven"
-        jdk "jdk8"
-    }
-    stages {
-        stage('Initialize'){
-            steps{
-                echo "PATH = ${M2_HOME}/bin:${PATH}"
-                echo "M2_HOME = /opt/maven"
-            }
-        }
-        stage('Build') {
-            steps {
-                dir("/var/lib/jenkins/workspace/sample-api-poc") {
-                sh 'mvn -B -DskipTests clean package'
-                }
-            }
-        }
+  environment {
+    DOCKERHUB_IMAGE = "budiholan/sample-api-poc")
+  }
+  agent any
+  tools {
+    maven "maven"
+    jdk "jdk8"
+  }
 
-stage('Building our image') {
-steps{
-script {
-dockerImage = docker.build registry + ":$BUILD_NUMBER"
-}
-}
-}
-stage('Deploy our image') {
-steps{
-script {
-docker.withRegistry( '', registryCredential ) {
-dockerImage.push()
-}
-}
-}
-}
-stage('Cleaning up') {
-steps{
-sh "docker rmi $registry:$BUILD_NUMBER"
-}
-}
-     }
-    post {
-       always {
-          junit(
-        allowEmptyResults: true,
-        testResults: '*/test-reports/.xml'
-      )
-      }
-   } 
+  stages {
+    stage('Initialize'){
+        steps{
+            echo "PATH = ${M2_HOME}/bin:${PATH}"
+            echo "M2_HOME = /opt/maven"
+        }
+    }
+    stage('Build') {
+        steps {
+            dir("/var/lib/jenkins/workspace/sample-api-poc") {
+            sh 'mvn -B -DskipTests clean package'
+            }
+        }
+    }
+
+    stage('Build image') {
+       dockerImage = docker.build($DOCKERHUB_IMAGE+":"+$BUILD_NUMBER)
+    }
+    
+    stage('Push image') {
+       withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
+       dockerImage.push()
+       }
+    }
+
+    stage('Cleaning up') {
+        steps{
+            sh "docker rmi "+$DOCKERHUB_IMAGE+":"+$BUILD_NUMBER
+        }
+    }
+
+  }
+  post {
+    always {
+      sh 'docker logout'
+    }
+  }
 }
