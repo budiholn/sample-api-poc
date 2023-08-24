@@ -53,8 +53,19 @@ pipeline {
 	steps {
              sh "sed -i 's|<TheTag>|$BUILD_NUMBER|g' sample-api-poc.yaml"
              sh "scp sample-api-poc.yaml "+KUBE_HOST_USER+"@"+KUBE_IP+":/home/rancher"
-             ssh KUBE_HOST_USER+"@"+KUBE_IP "export KUBECONFIG=kube_config_cluster.yml && kubectl apply -f sample-api-poc.yaml"
+             //ssh KUBE_HOST_USER+"@"+KUBE_IP "export KUBECONFIG=kube_config_cluster.yml && kubectl apply -f sample-api-poc.yaml"
 	}
+    }
+
+  def remote = [:]
+    remote.name = 'rancher'
+    remote.host = '192.168.160.211'
+    remote.user = 'rancher'
+    remote.password = 'rancher'
+    remote.allowAnyHosts = true
+    stage('Remote SSH') {
+      writeFile file: 'abc.sh', text: KUBE_HOST_USER+"@"+KUBE_IP "export KUBECONFIG=kube_config_cluster.yml && kubectl apply -f sample-api-poc.yaml"
+      sshScript remote: remote, script: "abc.sh"
     }
 
   }
