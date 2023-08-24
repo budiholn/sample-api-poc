@@ -1,4 +1,9 @@
 pipeline {
+environment {
+registry = "budiholan/openai-cicd"
+registryCredential = 'docker-hub'
+dockerImage = ''
+}
     agent any
     tools {
         maven "maven"
@@ -15,10 +20,31 @@ pipeline {
             steps {
                 dir("/var/lib/jenkins/workspace/sample-api-poc") {
                 sh 'mvn -B -DskipTests clean package'
-                sh 'sudo docker build -t budiholan/sample-api-poc:1.0.1 .'
                 }
             }
         }
+
+stage('Building our image') {
+steps{
+script {
+dockerImage = docker.build registry + ":$BUILD_NUMBER"
+}
+}
+}
+stage('Deploy our image') {
+steps{
+script {
+docker.withRegistry( '', registryCredential ) {
+dockerImage.push()
+}
+}
+}
+}
+stage('Cleaning up') {
+steps{
+sh "docker rmi $registry:$BUILD_NUMBER"
+}
+}
      }
     post {
        always {
