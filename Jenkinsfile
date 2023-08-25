@@ -81,7 +81,7 @@ pipeline {
     stage('Remote SSH') {
     	steps{
              sshagent(credentials : ['jenkins-rancher']) {
-	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP+" sudo chown rancher:rancher deploy-jenkins-rancher.sh"
+	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP+" chmod +x -R deploy-jenkins-rancher.sh"
 	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP+" ./deploy-jenkins-rancher.sh"
              }
     	}
