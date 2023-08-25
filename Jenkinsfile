@@ -1,11 +1,11 @@
                     // Define the remote server configuration
-		    def remote = [:]
-                    remote.name = 'RemoteServer'
-                    remote.host = "192.168.160.211"
-                    remote.user = "rancher"
-                    remote.port = 22
-                    remote.allowAnyHosts = true
-                    remote.identityFile = credentials('jenkins-rancher')
+		    //def remote = [:]
+                    //remote.name = 'RemoteServer'
+                    //remote.host = "192.168.160.211"
+                    //remote.user = "rancher"
+                    //remote.port = 22
+                    //remote.allowAnyHosts = true
+                    //remote.identityFile = credentials('jenkins-rancher')
 		    //remote.identityFile = '/var/lib/jenkins/.ssh/id_rsa'
 		    //remote.allowAnyHosts = true
 		    //remote.agentForwarding = true
@@ -71,24 +71,19 @@ pipeline {
 	}
     }
 
-        stage('SSH to Remote Server') {
+        /*stage('SSH to Remote Server') {
             steps {
 		  sshCommand remote: remote, command: "deploy-jenkins-rancher.sh"
-                //script {
-                    // Execute commands on the remote server
-                    //sshCommand remote: remote, command: commands
-		    //sshCommand remote: remote, command: "export KUBECONFIG=kube_config_cluster.yml' && 'kubectl apply -f sample-api-poc.yaml"
-                //}
             }
-        }
+        }*/
 	  
-    /*stage('Remote SSH') {
+    stage('Remote SSH') {
     	steps{
              sshagent(credentials : ['jenkins-rancher']) {
-	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP+" 'export KUBECONFIG=kube_config_cluster.yml' && 'kubectl apply -f sample-api-poc.yaml'"
+	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP+" deploy-jenkins-rancher.sh"
              }
     	}
-    }*/
+    }
 
   }
   post {
