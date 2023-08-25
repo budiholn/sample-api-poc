@@ -1,3 +1,4 @@
+def time = "10"
 pipeline {
   environment {
     DOCKERHUB_IMAGE = "budiholan/jenkins-api-poc"
@@ -70,7 +71,6 @@ pipeline {
     }
 
     stage ("wait_prior_starting_smoke_testing") {
-    	def time = "10"
     	echo "Waiting 10 seconds for deployment to complete"
     	sleep time.toInteger() // seconds
     }
