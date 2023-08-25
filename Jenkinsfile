@@ -61,7 +61,7 @@ pipeline {
 	}
     }
  
-    stage('Remote SSH') {
+    stage('Remote SSH yaml deployment') {
     	steps{
              sshagent(credentials : ['jenkins-rancher']) {
 	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP+" chmod +x -R deploy-jenkins-rancher.sh"
@@ -77,7 +77,7 @@ pipeline {
 	}
     }
 
-    stage('Remote SSH') {
+    stage('Remote SSH rmi') {
     	steps{
              sshagent(credentials : ['jenkins-rancher']) {
 	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP+" chmod +x -R delete-old-image-registry.sh"
