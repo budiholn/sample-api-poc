@@ -70,9 +70,11 @@ pipeline {
     	}
     }
 
-    stage ("wait_prior_starting_smoke_testing") {
-    	echo "Waiting 10 seconds for deployment to complete"
-    	sleep time.toInteger() // seconds
+    stage ('wait_prior_starting_smoke_testing') {
+	steps{
+    	     echo "Waiting 10 seconds for deployment to complete"
+    	     sleep time.toInteger() // seconds
+	}
     }
 
     stage('Remote SSH') {
