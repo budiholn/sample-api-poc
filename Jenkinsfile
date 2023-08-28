@@ -58,8 +58,9 @@ pipeline {
                  i=\$BUILD_NUMBER
                  shift=1
                  result=\$(echo "\$i - \$shift" | bc)
+		 sed -i 's|<TheOldTag>|\$result|g' delete-old-image-registry.sh
                 '''
-	     sh "sed -i 's|<TheOldTag>|'"+result+"'|g' delete-old-image-registry.sh"
+
              sh "scp sample-api-poc.yaml "+KUBE_HOST_USER+"@"+KUBE_IP+":/home/rancher/"
 	     sh "scp deploy-jenkins-rancher.sh "+KUBE_HOST_USER+"@"+KUBE_IP+":/home/rancher/"
 	}
