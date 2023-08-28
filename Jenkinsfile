@@ -3,7 +3,6 @@ pipeline {
     DOCKERHUB_IMAGE = "budiholan/jenkins-api-poc"
     KUBE_HOST_USER = "rancher"
     KUBE_IP = "192.168.160.211"
-    OLD_BUILD_NUMBER=$(awk { i=$BUILD_NUMBER; shift = 1; print i-shift })
   }
 	
   agent any
@@ -57,7 +56,13 @@ pipeline {
              sh "sed -i 's|<TheTag>|$BUILD_NUMBER|g' sample-api-poc.yaml"
              sh "scp sample-api-poc.yaml "+KUBE_HOST_USER+"@"+KUBE_IP+":/home/rancher/"
 	     sh "scp deploy-jenkins-rancher.sh "+KUBE_HOST_USER+"@"+KUBE_IP+":/home/rancher/"
-	     sh "sed -i 's|<TheTag>|$OLD_BUILD_NUMBER|g' delete-old-image-registry.sh"
+sh '''
+i=\$BUILD_NUMBER
+shift=1
+result=\$(echo "\$i - \$shift" | bc)
+echo \$result
+'''
+	     sh "sed -i 's|<TheTag>|$result|g' delete-old-image-registry.sh"
 	}
     }
  
