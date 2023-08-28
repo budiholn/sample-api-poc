@@ -56,13 +56,12 @@ pipeline {
              sh "sed -i 's|<TheTag>|$BUILD_NUMBER|g' sample-api-poc.yaml"
              sh "scp sample-api-poc.yaml "+KUBE_HOST_USER+"@"+KUBE_IP+":/home/rancher/"
 	     sh "scp deploy-jenkins-rancher.sh "+KUBE_HOST_USER+"@"+KUBE_IP+":/home/rancher/"
-sh '''
-i=\$BUILD_NUMBER
-shift=1
-result=\$(echo "\$i - \$shift" | bc)
-echo \$result
-'''
-	     sh "sed -i 's|<TheTag>|$result|g' delete-old-image-registry.sh"
+             sh '''
+                 i=\$BUILD_NUMBER
+                 shift=1
+                 result=\$(echo "\$i - \$shift" | bc)
+                '''
+	     sh "sed -i 's|<TheOldTag>|$result|g' delete-old-image-registry.sh"
 	}
     }
  
