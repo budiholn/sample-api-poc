@@ -3,7 +3,7 @@ pipeline {
     DOCKERHUB_IMAGE = "budiholan/jenkins-api-poc"
     KUBE_HOST_USER = "rancher"
     KUBE_IP = "192.168.160.211"
-    OLD_BUILD_NUMBER=$(awk { i=$BUILD_NUMBER; print i-- })
+    OLD_BUILD_NUMBER=$(awk { i=$BUILD_NUMBER; i--; } print i)
   }
 	
   agent any
