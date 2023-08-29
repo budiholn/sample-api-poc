@@ -76,7 +76,9 @@ pipeline {
     	steps{
              sshagent(credentials : ['jenkins-rancher']) {
 	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP1+" chmod +x -R deploy-jenkins-rancher.sh"
-	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP1+" chmod +x -R delete-old-image-registry.sh"
+	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP4+" chmod +x -R delete-old-image-registry.sh"
+	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP5+" chmod +x -R delete-old-image-registry.sh"
+	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP6+" chmod +x -R delete-old-image-registry.sh"
 		     
 	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP1+" ./deploy-jenkins-rancher.sh"
 	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP4+" ./delete-old-image-registry.sh"
