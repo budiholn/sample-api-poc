@@ -59,7 +59,7 @@ pipeline {
              sh "sed -i 's|<TheTag>|$BUILD_NUMBER|g' sample-api-poc.yaml"
 	     sh """
 		i=\$BUILD_NUMBER
-		shift=1
+		shift=2
 		result=\$(echo "\$i - \$shift" | bc)
 		sed -i "s|<TheOldTag>|\$result|g" delete-old-image-registry.sh
 	      """
