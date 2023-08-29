@@ -66,7 +66,9 @@ pipeline {
 
              sh "scp sample-api-poc.yaml "+KUBE_HOST_USER+"@"+KUBE_IP1+":/home/rancher/"
 	     sh "scp deploy-jenkins-rancher.sh "+KUBE_HOST_USER+"@"+KUBE_IP1+":/home/rancher/"
-	     sh "scp delete-old-image-registry.sh "+KUBE_HOST_USER+"@"+KUBE_IP1+":/home/rancher/"
+	     sh "scp delete-old-image-registry.sh "+KUBE_HOST_USER+"@"+KUBE_IP4+":/home/rancher/"
+	     sh "scp delete-old-image-registry.sh "+KUBE_HOST_USER+"@"+KUBE_IP5+":/home/rancher/"
+	     sh "scp delete-old-image-registry.sh "+KUBE_HOST_USER+"@"+KUBE_IP6+":/home/rancher/"
 	}
     }
  
@@ -82,8 +84,10 @@ pipeline {
 	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP6+" ./delete-old-image-registry.sh"
 
 	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP1+" rm deploy-jenkins-rancher.sh"
-	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP1+" rm delete-old-image-registry.sh"
 	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP1+" rm sample-api-poc.yaml"
+	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP4+" rm delete-old-image-registry.sh"
+	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP5+" rm delete-old-image-registry.sh"
+	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP6+" rm delete-old-image-registry.sh"
              }
     	}
     }
