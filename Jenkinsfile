@@ -58,7 +58,7 @@ pipeline {
                  i=\$BUILD_NUMBER
                  shift=1
                  result=\$(echo "\$i - \$shift" | bc)
-		 sed -i 's|<TheOldTag>|$result|g' delete-old-image-registry.yaml
+		 //sed -i 's|<TheOldTag>|$result|g' delete-old-image-registry.yaml
                 '''
 
              sh "scp sample-api-poc.yaml "+KUBE_HOST_USER+"@"+KUBE_IP+":/home/rancher/"
