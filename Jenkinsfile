@@ -81,9 +81,9 @@ pipeline {
 	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP6+" chmod +x -R delete-old-image-registry.sh"
 		     
 	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP1+" ./deploy-jenkins-rancher.sh"
-	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP4+" ./delete-old-image-registry.sh" || true
-	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP5+" ./delete-old-image-registry.sh" || true
-	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP6+" ./delete-old-image-registry.sh" || true
+	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP4+" ./delete-old-image-registry.sh"
+	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP5+" ./delete-old-image-registry.sh"
+	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP6+" ./delete-old-image-registry.sh"
 
 	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP1+" rm deploy-jenkins-rancher.sh"
 	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP1+" rm sample-api-poc.yaml"
