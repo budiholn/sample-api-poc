@@ -2,7 +2,10 @@ pipeline {
   environment {
     DOCKERHUB_IMAGE = "budiholan/jenkins-api-poc"
     KUBE_HOST_USER = "rancher"
-    KUBE_IP = "192.168.160.211"
+    KUBE_IP1 = "192.168.160.211"
+    KUBE_IP4 = "192.168.160.214"
+    KUBE_IP5 = "192.168.160.215"
+    KUBE_IP6 = "192.168.160.216"
   }
 	
   agent any
@@ -61,24 +64,26 @@ pipeline {
 		sed -i "s|<TheOldTag>|\$result|g" delete-old-image-registry.sh
 	      """
 
-             sh "scp sample-api-poc.yaml "+KUBE_HOST_USER+"@"+KUBE_IP+":/home/rancher/"
-	     sh "scp deploy-jenkins-rancher.sh "+KUBE_HOST_USER+"@"+KUBE_IP+":/home/rancher/"
-	     sh "scp delete-old-image-registry.sh "+KUBE_HOST_USER+"@"+KUBE_IP+":/home/rancher/"
+             sh "scp sample-api-poc.yaml "+KUBE_HOST_USER+"@"+KUBE_IP1+":/home/rancher/"
+	     sh "scp deploy-jenkins-rancher.sh "+KUBE_HOST_USER+"@"+KUBE_IP1+":/home/rancher/"
+	     sh "scp delete-old-image-registry.sh "+KUBE_HOST_USER+"@"+KUBE_IP1+":/home/rancher/"
 	}
     }
  
     stage('Remote SSH yaml deployment') {
     	steps{
              sshagent(credentials : ['jenkins-rancher']) {
-	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP+" chmod +x -R deploy-jenkins-rancher.sh"
-	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP+" chmod +x -R delete-old-image-registry.sh"
+	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP1+" chmod +x -R deploy-jenkins-rancher.sh"
+	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP1+" chmod +x -R delete-old-image-registry.sh"
 		     
-	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP+" ./deploy-jenkins-rancher.sh"
-	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP+" ./delete-old-image-registry.sh"
+	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP1+" ./deploy-jenkins-rancher.sh"
+	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP4+" ./delete-old-image-registry.sh"
+	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP5+" ./delete-old-image-registry.sh"
+	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP6+" ./delete-old-image-registry.sh"
 
-	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP+" rm deploy-jenkins-rancher.sh"
-	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP+" rm delete-old-image-registry.sh"
-	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP+" rm sample-api-poc.yaml"
+	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP1+" rm deploy-jenkins-rancher.sh"
+	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP1+" rm delete-old-image-registry.sh"
+	     sh "ssh "+KUBE_HOST_USER+"@"+KUBE_IP1+" rm sample-api-poc.yaml"
              }
     	}
     }
