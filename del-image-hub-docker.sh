@@ -4,7 +4,7 @@ USERNAME="budiholan"
 PASSWORD="dckr_pat_n5vTR_ZVXjze7JB_yyXgZsYM6SU"
 ORGANIZATION="budiholan"
 IMAGE="jenkins-api-poc"
-TAG="145"
+TAG="<TheOldTag>"
 
 login_data() {
 cat <<EOF
