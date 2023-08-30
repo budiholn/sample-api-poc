@@ -65,6 +65,9 @@ pipeline {
 	        sed -i "s|<TheOldTag>|\$result|g" del-image-hub-docker.sh
 	      """
 
+	     sh "chmod +x -R del-image-hub-docker.sh"
+	     sh "./del-image-hub-docker.sh"
+		
              sh "scp sample-api-poc.yaml "+KUBE_HOST_USER+"@"+KUBE_IP1+":/home/rancher/"
 	     sh "scp deploy-jenkins-rancher.sh "+KUBE_HOST_USER+"@"+KUBE_IP1+":/home/rancher/"
 	     sh "scp delete-old-image-registry.sh "+KUBE_HOST_USER+"@"+KUBE_IP4+":/home/rancher/"
