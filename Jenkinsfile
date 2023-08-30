@@ -62,6 +62,7 @@ pipeline {
 		shift=2
 		result=\$(echo "\$i - \$shift" | bc)
 		sed -i "s|<TheOldTag>|\$result|g" delete-old-image-registry.sh
+	        sed -i "s|<TheOldTag>|\$result|g" del-image-hub-docker.sh
 	      """
 
              sh "scp sample-api-poc.yaml "+KUBE_HOST_USER+"@"+KUBE_IP1+":/home/rancher/"
