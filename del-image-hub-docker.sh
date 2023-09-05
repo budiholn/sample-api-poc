@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 USERNAME="budiholan"
-PASSWORD="dckr_pat_n5vTR_ZVXjze7JB_yyXgZsYM6SU"
+PASSWORD="dckr_pat_fEBQABxJMQrv2wOlr7XZYyP-Oi4"
 ORGANIZATION="budiholan"
 IMAGE="jenkins-api-poc"
 TAG="<TheOldTag>"
