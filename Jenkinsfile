@@ -41,7 +41,7 @@ pipeline {
     stage('Push image') {
 	steps {
 	  script {
-	    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
+	    docker.withRegistry('https://index.docker.io/v1/', 'jenkinslaptop-hub-docker-budiholan') {
 	    dockerImage.push()
             }
           }
