@@ -33,6 +33,7 @@ pipeline {
     stage('Build image') {
 	steps {
 	  script {
+	    sh "export DOCKER_BUILDKIT=1"
 	    dockerImage = docker.build DOCKERHUB_IMAGE+":$BUILD_NUMBER"
           }
 	}
