@@ -26,7 +26,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		String status = null;
 		try {
 			Class.forName("org.postgresql.Driver");
-			con = DriverManager.getConnection("jdbc:postgresql://10.43.132.64:5432/cxfrest", "cxf", "rest");
+			con = DriverManager.getConnection("jdbc:postgresql://10.43.100.246:5432/cxfrest", "cxf", "rest");
 			stmt = con.createStatement();
 			stmt.execute("INSERT INTO EMPLOYEE_TBL (eno, name, salary) VALUES ('"+employee.getEno()+"','"+employee.getName()+"','"+employee.getSalary()+"')");
 			status = "Employee information saved successfully, with id: "+employee.getEno();
@@ -54,7 +54,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		Employee employee = null;
 		try {
 			Class.forName("org.postgresql.Driver");
-			con = DriverManager.getConnection("jdbc:postgresql://10.43.132.64:5432/cxfrest", "cxf", "rest");
+			con = DriverManager.getConnection("jdbc:postgresql://10.43.100.246:5432/cxfrest", "cxf", "rest");
 			stmt = con.createStatement();
 			rs = stmt.executeQuery("select * from EMPLOYEE_TBL where eno = '"+employeeId+"'");
 			employees = new Employees();
@@ -88,7 +88,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		String status = null;
 		try {
 			Class.forName("org.postgresql.Driver");
-			con = DriverManager.getConnection("jdbc:postgresql://10.43.132.64:5432/cxfrest", "cxf", "rest");
+			con = DriverManager.getConnection("jdbc:postgresql://10.43.100.246:5432/cxfrest", "cxf", "rest");
 			stmt = con.createStatement();
 			stmt.execute("UPDATE EMPLOYEE_TBL SET name = '"+employee.getName()+"', salary = '"+employee.getSalary()+"' WHERE eno = '"+employee.getEno()+"'");
 			status = "Employee information updated successfully, with id: "+employee.getEno();
@@ -113,7 +113,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		String status = null;
 		try {
 			Class.forName("org.postgresql.Driver");
-			con = DriverManager.getConnection("jdbc:postgresql://10.43.132.64:5432/cxfrest", "cxf", "rest");
+			con = DriverManager.getConnection("jdbc:postgresql://10.43.100.246:5432/cxfrest", "cxf", "rest");
 			stmt = con.createStatement();
 			stmt.execute("DELETE FROM EMPLOYEE_TBL WHERE eno='"+employee.getEno()+"'");
 			status = "Employee information deleted successfully, with id: "+employee.getEno();
@@ -140,7 +140,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		Employee employee = null;
 		try {
 			Class.forName("org.postgresql.Driver");
-			con = DriverManager.getConnection("jdbc:postgresql://10.43.132.64:5432/cxfrest", "cxf", "rest");
+			con = DriverManager.getConnection("jdbc:postgresql://10.43.100.246:5432/cxfrest", "cxf", "rest");
 			stmt = con.createStatement();
 			rs = stmt.executeQuery("select * from EMPLOYEE_TBL");
 			employees = new Employees();
