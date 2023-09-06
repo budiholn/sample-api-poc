@@ -99,6 +99,14 @@ pipeline {
     	}
     }
 
+    stage('test endpoint api') {
+        steps{
+            sh "echo sleep for application ready"
+	    sh "sleep 10"
+	    sh "curl http://192.168.160.215:32569/ApacheCXF-XML-JSON/services/employeeservice/getallemployee"
+        }
+    }
+
   }
   post {
     always {
