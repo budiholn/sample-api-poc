@@ -6,6 +6,7 @@ pipeline {
     KUBE_IP4 = "192.168.160.214"
     KUBE_IP5 = "192.168.160.215"
     KUBE_IP6 = "192.168.160.216"
+    DOCKER_BUILDKIT='1'
   }
 	
   agent any
@@ -33,7 +34,6 @@ pipeline {
     stage('Build image') {
 	steps {
 	  script {
-	    sh "export DOCKER_BUILDKIT=1"
 	    dockerImage = docker.build DOCKERHUB_IMAGE+":$BUILD_NUMBER"
           }
 	}
